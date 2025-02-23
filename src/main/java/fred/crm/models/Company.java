@@ -70,7 +70,7 @@ public class Company {
     @Column(nullable = true, length = 1000)
     private String comments;
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Contact> contacts = new ArrayList<>();
 
     public Company() {
@@ -238,5 +238,41 @@ public class Company {
     public void removeContact(Contact contact) {
         this.contacts.remove(contact);
         contact.setCompany(null);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Company company = (Company) o;
+        return Double.compare(capital, company.capital) == 0 && Objects.equals(name, company.name) && Objects.equals(SIRET, company.SIRET) && Objects.equals(TvaNumber, company.TvaNumber) && Objects.equals(juridicalStructure, company.juridicalStructure) && Objects.equals(creationDate, company.creationDate) && Objects.equals(activitySector, company.activitySector) && Objects.equals(secondarySector, company.secondarySector) && Objects.equals(activityDescription, company.activityDescription) && Objects.equals(keywords, company.keywords) && Objects.equals(marketTarget, company.marketTarget) && importance == company.importance && region == company.region && maturity == company.maturity && Objects.equals(comments, company.comments) && Objects.equals(contacts, company.contacts);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, SIRET, TvaNumber, juridicalStructure, creationDate, capital, activitySector, secondarySector, activityDescription, keywords, marketTarget, importance, region, maturity, comments, contacts);
+    }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", SIRET='" + SIRET + '\'' +
+                ", TvaNumber='" + TvaNumber + '\'' +
+                ", juridicalStructure='" + juridicalStructure + '\'' +
+                ", creationDate=" + creationDate +
+                ", capital=" + capital +
+                ", activitySector='" + activitySector + '\'' +
+                ", secondarySector='" + secondarySector + '\'' +
+                ", activityDescription='" + activityDescription + '\'' +
+                ", keywords='" + keywords + '\'' +
+                ", marketTarget='" + marketTarget + '\'' +
+                ", importance=" + importance +
+                ", region=" + region +
+                ", maturity=" + maturity +
+                ", comments='" + comments + '\'' +
+                ", contacts=" + contacts +
+                '}';
     }
 }
