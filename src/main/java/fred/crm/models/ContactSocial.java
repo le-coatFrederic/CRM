@@ -2,6 +2,7 @@ package fred.crm.models;
 
 import fred.crm.models.values.RelationState;
 import fred.crm.models.values.SocialMedia;
+import fred.crm.services.CryptoConverter;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -12,25 +13,18 @@ public class ContactSocial {
     @GeneratedValue
     private Long id;
 
-    @Column(unique = true, nullable = true)
+    @Column(nullable = true)
+    @Convert(converter = CryptoConverter.class)
     private String email;
 
-    @Column(unique = true, nullable = true)
+    @Column(nullable = true)
+    @Convert(converter = CryptoConverter.class)
     private String phone;
 
-    @Column(unique = true, nullable = true)
+    @Column(nullable = true)
     private String linkedinLink;
 
-    @Column(unique = true, nullable = true)
-    private String facebookLink;
-
-    @Column(unique = true, nullable = true)
-    private String twitterLink;
-
-    @Column(unique = true, nullable = true)
-    private String discordLink;
-
-    @Column(unique = true, nullable = true)
+    @Column(nullable = true)
     private String youtubeLink;
 
     @Column(nullable = false)
@@ -42,6 +36,7 @@ public class ContactSocial {
     private RelationState relationState;
 
     @Column(nullable = true, length = 1000)
+    @Convert(converter = CryptoConverter.class)
     private String notes;
 
     @OneToOne(mappedBy = "contactSocial")
@@ -50,13 +45,10 @@ public class ContactSocial {
     public ContactSocial() {
     }
 
-    public ContactSocial(String email, String phone, String linkedinLink, String facebookLink, String twitterLink, String discordLink, String youtubeLink, SocialMedia meetingCanal, RelationState relationState, String notes, Contact contact) {
+    public ContactSocial(String email, String phone, String linkedinLink, String youtubeLink, SocialMedia meetingCanal, RelationState relationState, String notes, Contact contact) {
         this.email = email;
         this.phone = phone;
         this.linkedinLink = linkedinLink;
-        this.facebookLink = facebookLink;
-        this.twitterLink = twitterLink;
-        this.discordLink = discordLink;
         this.youtubeLink = youtubeLink;
         this.meetingCanal = meetingCanal;
         this.relationState = relationState;
@@ -94,30 +86,6 @@ public class ContactSocial {
 
     public void setLinkedinLink(String linkedinLink) {
         this.linkedinLink = linkedinLink;
-    }
-
-    public String getFacebookLink() {
-        return facebookLink;
-    }
-
-    public void setFacebookLink(String facebookLink) {
-        this.facebookLink = facebookLink;
-    }
-
-    public String getTwitterLink() {
-        return twitterLink;
-    }
-
-    public void setTwitterLink(String twitterLink) {
-        this.twitterLink = twitterLink;
-    }
-
-    public String getDiscordLink() {
-        return discordLink;
-    }
-
-    public void setDiscordLink(String discordLink) {
-        this.discordLink = discordLink;
     }
 
     public String getYoutubeLink() {
@@ -165,12 +133,12 @@ public class ContactSocial {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ContactSocial that = (ContactSocial) o;
-        return Objects.equals(email, that.email) && Objects.equals(phone, that.phone) && Objects.equals(linkedinLink, that.linkedinLink) && Objects.equals(facebookLink, that.facebookLink) && Objects.equals(twitterLink, that.twitterLink) && Objects.equals(discordLink, that.discordLink) && Objects.equals(youtubeLink, that.youtubeLink) && meetingCanal == that.meetingCanal && relationState == that.relationState && Objects.equals(notes, that.notes) && Objects.equals(contact, that.contact);
+        return Objects.equals(email, that.email) && Objects.equals(phone, that.phone) && Objects.equals(linkedinLink, that.linkedinLink) && Objects.equals(youtubeLink, that.youtubeLink) && meetingCanal == that.meetingCanal && relationState == that.relationState && Objects.equals(notes, that.notes) && Objects.equals(contact, that.contact);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(email, phone, linkedinLink, facebookLink, twitterLink, discordLink, youtubeLink, meetingCanal, relationState, notes, contact);
+        return Objects.hash(email, phone, linkedinLink, youtubeLink, meetingCanal, relationState, notes, contact);
     }
 
     @Override
@@ -180,9 +148,6 @@ public class ContactSocial {
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", linkedinLink='" + linkedinLink + '\'' +
-                ", facebookLink='" + facebookLink + '\'' +
-                ", twitterLink='" + twitterLink + '\'' +
-                ", discordLink='" + discordLink + '\'' +
                 ", youtubeLink='" + youtubeLink + '\'' +
                 ", meetingCanal=" + meetingCanal +
                 ", relationState=" + relationState +

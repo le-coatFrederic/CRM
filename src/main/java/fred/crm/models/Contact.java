@@ -1,5 +1,7 @@
 package fred.crm.models;
 
+import ch.qos.logback.classic.pattern.DateConverter;
+import fred.crm.services.CryptoConverter;
 import jakarta.persistence.*;
 
 import java.sql.Date;
@@ -14,12 +16,12 @@ public class Contact {
     private Long id;
 
     @Column(nullable = false)
+    @Convert(converter = CryptoConverter.class)
     private String firstname;
 
     @Column(nullable = false)
+    @Convert(converter = CryptoConverter.class)
     private String lastname;
-
-    private Date birthDate;
 
     @Column(nullable = false)
     private String job;
@@ -48,10 +50,9 @@ public class Contact {
     public Contact() {
     }
 
-    public Contact(String firstname, String lastname, Date birthDate, String job, String department, Date dateJoinedCompany, ContactSocial contactSocial, ContactTastes contactTastes, Company company, List<Interaction> interactions) {
+    public Contact(String firstname, String lastname, String job, String department, Date dateJoinedCompany, ContactSocial contactSocial, ContactTastes contactTastes, Company company, List<Interaction> interactions) {
         this.firstname = firstname;
         this.lastname = lastname;
-        this.birthDate = birthDate;
         this.job = job;
         this.department = department;
         this.dateJoinedCompany = dateJoinedCompany;
@@ -101,14 +102,6 @@ public class Contact {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
     }
 
     public String getJob() {
@@ -164,12 +157,12 @@ public class Contact {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Contact contact = (Contact) o;
-        return Objects.equals(firstname, contact.firstname) && Objects.equals(lastname, contact.lastname) && Objects.equals(birthDate, contact.birthDate) && Objects.equals(job, contact.job) && Objects.equals(department, contact.department) && Objects.equals(dateJoinedCompany, contact.dateJoinedCompany) && Objects.equals(contactSocial, contact.contactSocial) && Objects.equals(contactTastes, contact.contactTastes) && Objects.equals(company, contact.company) && Objects.equals(interactions, contact.interactions);
+        return Objects.equals(firstname, contact.firstname) && Objects.equals(lastname, contact.lastname) && Objects.equals(job, contact.job) && Objects.equals(department, contact.department) && Objects.equals(dateJoinedCompany, contact.dateJoinedCompany) && Objects.equals(contactSocial, contact.contactSocial) && Objects.equals(contactTastes, contact.contactTastes) && Objects.equals(company, contact.company) && Objects.equals(interactions, contact.interactions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstname, lastname, birthDate, job, department, dateJoinedCompany, contactSocial, contactTastes, company, interactions);
+        return Objects.hash(firstname, lastname, job, department, dateJoinedCompany, contactSocial, contactTastes, company, interactions);
     }
 
     @Override
@@ -178,7 +171,6 @@ public class Contact {
                 "id=" + id +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
-                ", birthDate=" + birthDate +
                 ", job='" + job + '\'' +
                 ", department='" + department + '\'' +
                 ", dateJoinedCompany=" + dateJoinedCompany +

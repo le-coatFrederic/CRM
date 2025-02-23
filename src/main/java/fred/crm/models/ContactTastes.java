@@ -1,13 +1,13 @@
 package fred.crm.models;
 
 import fred.crm.models.values.SocialMedia;
+import fred.crm.services.CryptoConverter;
 import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity
 public class ContactTastes {
-
     @Id
     @GeneratedValue
     private Long id;
@@ -22,6 +22,7 @@ public class ContactTastes {
     private String contactHours;
 
     @Column(nullable = true, length = 1000)
+    @Convert(converter = CryptoConverter.class)
     private String notes;
 
     @OneToOne(mappedBy = "contactTastes")
