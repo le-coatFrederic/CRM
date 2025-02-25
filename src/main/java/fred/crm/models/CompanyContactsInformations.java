@@ -33,10 +33,13 @@ public class CompanyContactsInformations {
     @Column(nullable = true, unique = true)
     private String facebook;
 
+    @OneToOne(mappedBy = "companyContactsInformations")
+    private Company company;
+
     public CompanyContactsInformations() {
     }
 
-    public CompanyContactsInformations(List<Location> locations, String email, String phone, String website, String linkedin, String twitter, String facebook) {
+    public CompanyContactsInformations(List<Location> locations, String email, String phone, String website, String linkedin, String twitter, String facebook, Company company) {
         this.locations = locations;
         this.email = email;
         this.phone = phone;
@@ -44,6 +47,7 @@ public class CompanyContactsInformations {
         this.linkedin = linkedin;
         this.twitter = twitter;
         this.facebook = facebook;
+        this.company = company;
     }
 
     public void setId(Long id) {
@@ -120,17 +124,25 @@ public class CompanyContactsInformations {
         location.setCompanyContactsInformations(null);
     }
 
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CompanyContactsInformations that = (CompanyContactsInformations) o;
-        return Objects.equals(locations, that.locations) && Objects.equals(email, that.email) && Objects.equals(phone, that.phone) && Objects.equals(website, that.website) && Objects.equals(linkedin, that.linkedin) && Objects.equals(twitter, that.twitter) && Objects.equals(facebook, that.facebook);
+        return Objects.equals(locations, that.locations) && Objects.equals(email, that.email) && Objects.equals(phone, that.phone) && Objects.equals(website, that.website) && Objects.equals(linkedin, that.linkedin) && Objects.equals(twitter, that.twitter) && Objects.equals(facebook, that.facebook) && Objects.equals(company, that.company);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(locations, email, phone, website, linkedin, twitter, facebook);
+        return Objects.hash(locations, email, phone, website, linkedin, twitter, facebook, company);
     }
 
     @Override
@@ -144,6 +156,7 @@ public class CompanyContactsInformations {
                 ", linkedin='" + linkedin + '\'' +
                 ", twitter='" + twitter + '\'' +
                 ", facebook='" + facebook + '\'' +
+                ", company='" + company + '\'' +
                 '}';
     }
 }

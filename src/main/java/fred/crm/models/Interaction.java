@@ -24,7 +24,7 @@ public class Interaction {
     private InteractionStatus status;
 
     @Column(nullable = false)
-    private Time statTime;
+    private Time startTime;
 
     @Column(nullable = false)
     private Time endTime;
@@ -52,10 +52,10 @@ public class Interaction {
     public Interaction() {
     }
 
-    public Interaction(Contact contact, InteractionStatus status, Time statTime, Time endTime, InteractionType type, String subject, String objectives, String privateNotes, InteractionConclusion conclusion, Time nextDate) {
+    public Interaction(Contact contact, InteractionStatus status, Time startTime, Time endTime, InteractionType type, String subject, String objectives, String privateNotes, InteractionConclusion conclusion, Time nextDate) {
         this.contact = contact;
         this.status = status;
-        this.statTime = statTime;
+        this.startTime = startTime;
         this.endTime = endTime;
         this.type = type;
         this.subject = subject;
@@ -89,12 +89,12 @@ public class Interaction {
         this.status = status;
     }
 
-    public Time getStatTime() {
-        return statTime;
+    public Time getstartTime() {
+        return startTime;
     }
 
-    public void setStatTime(Time statTime) {
-        this.statTime = statTime;
+    public void setstartTime(Time startTime) {
+        this.startTime = startTime;
     }
 
     public Time getEndTime() {
@@ -158,12 +158,12 @@ public class Interaction {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Interaction that = (Interaction) o;
-        return Objects.equals(contact, that.contact) && status == that.status && Objects.equals(statTime, that.statTime) && Objects.equals(endTime, that.endTime) && type == that.type && Objects.equals(subject, that.subject) && Objects.equals(objectives, that.objectives) && Objects.equals(privateNotes, that.privateNotes) && conclusion == that.conclusion && Objects.equals(nextDate, that.nextDate);
+        return Objects.equals(contact, that.contact) && status == that.status && Objects.equals(startTime, that.startTime) && Objects.equals(endTime, that.endTime) && type == that.type && Objects.equals(subject, that.subject) && Objects.equals(objectives, that.objectives) && Objects.equals(privateNotes, that.privateNotes) && conclusion == that.conclusion && Objects.equals(nextDate, that.nextDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(contact, status, statTime, endTime, type, subject, objectives, privateNotes, conclusion, nextDate);
+        return Objects.hash(contact, status, startTime, endTime, type, subject, objectives, privateNotes, conclusion, nextDate);
     }
 
     @Override
@@ -172,7 +172,7 @@ public class Interaction {
                 "id=" + id +
                 ", contact=" + contact +
                 ", status=" + status +
-                ", statTime=" + statTime +
+                ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", type=" + type +
                 ", subject='" + subject + '\'' +
