@@ -2,13 +2,7 @@ package fred.crm.models.mappers;
 
 import fred.crm.models.Company;
 import fred.crm.models.dtos.CompanyDTO;
-import fred.crm.models.values.Importance;
-import fred.crm.models.values.Maturity;
-import fred.crm.models.values.Region;
-import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
-
-import java.sql.Date;
 
 @Component
 public class CompanyMapper {
