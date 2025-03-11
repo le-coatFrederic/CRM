@@ -5,8 +5,7 @@ import fred.crm.models.values.SocialMedia;
 
 import java.sql.Date;
 
-public record ContactDTO(
-        Long id,
+public record CreateContactDTO(
         String firstname,
         String lastname,
         String job,

@@ -1,7 +1,6 @@
 package fred.crm.models.dtos;
 
-public record LocationDTO(
-        Long id,
+public record CreateLocationDTO(
         String address1,
         String address2,
         String city,

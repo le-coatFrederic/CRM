@@ -6,8 +6,7 @@ import fred.crm.models.values.Region;
 
 import java.sql.Date;
 
-public record CompanyDTO(
-        Long id,
+public record CreateCompanyDTO(
         String name,
         String SIRET,
         String tvaNumber,

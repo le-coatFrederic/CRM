@@ -1,59 +1,82 @@
 package fred.crm.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fred.crm.models.values.InteractionConclusion;
 import fred.crm.models.values.InteractionStatus;
 import fred.crm.models.values.InteractionType;
+import fred.crm.helpers.CryptoConverter;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.sql.Time;
-import java.util.Objects;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class Interaction {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NonNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private InteractionStatus status;
+
+    @NonNull
+    @Column(nullable = false)
+    @Convert(converter = CryptoConverter.class)
+    private Time startTime;
+
+    @NonNull
+    @Column(nullable = false)
+    @Convert(converter = CryptoConverter.class)
+    private Time endTime;
+
+    @NonNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private InteractionType type;
+
+    @NonNull
+    @Column(nullable = false)
+    @Convert(converter = CryptoConverter.class)
+    private String subject;
+
+    @NonNull
+    @Column(nullable = false)
+    @Convert(converter = CryptoConverter.class)
+    private String objectives;
+
+    @Column(nullable = false, length = 1000)
+    @NonNull
+    @Convert(converter = CryptoConverter.class)
+    private String privateNotes;
+
+    @Enumerated(EnumType.STRING)
+    @NonNull
+    @Column(nullable = false)
+    @Convert(converter = CryptoConverter.class)
+    private InteractionConclusion conclusion;
+
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Interaction nextInteraction;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "nextInteraction")
+    private Interaction previousInteraction;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "contact_id")
     private Contact contact;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private InteractionStatus status;
-
-    @Column(nullable = false)
-    private Time startTime;
-
-    @Column(nullable = false)
-    private Time endTime;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private InteractionType type;
-
-    @Column(nullable = false)
-    private String subject;
-
-    @Column(nullable = false)
-    private String objectives;
-
-    @Column(nullable = false, length = 1000)
-    private String privateNotes;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private InteractionConclusion conclusion;
-
-    @Column(nullable = true)
-    private Time nextDate;
-
-    public Interaction() {
-    }
-
-    public Interaction(Contact contact, InteractionStatus status, Time startTime, Time endTime, InteractionType type, String subject, String objectives, String privateNotes, InteractionConclusion conclusion, Time nextDate) {
-        this.contact = contact;
+    public Interaction(@NonNull InteractionStatus status, @NonNull Time startTime, @NonNull Time endTime, @NonNull InteractionType type, @NonNull String subject, @NonNull String objectives, @NonNull String privateNotes, @NonNull InteractionConclusion conclusion, Interaction nextInteraction, Interaction previousInteraction, Contact contact) {
         this.status = status;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -62,124 +85,8 @@ public class Interaction {
         this.objectives = objectives;
         this.privateNotes = privateNotes;
         this.conclusion = conclusion;
-        this.nextDate = nextDate;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Contact getContact() {
-        return contact;
-    }
-
-    public void setContact(Contact contact) {
+        this.nextInteraction = nextInteraction;
+        this.previousInteraction = previousInteraction;
         this.contact = contact;
-    }
-
-    public InteractionStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(InteractionStatus status) {
-        this.status = status;
-    }
-
-    public Time getstartTime() {
-        return startTime;
-    }
-
-    public void setstartTime(Time startTime) {
-        this.startTime = startTime;
-    }
-
-    public Time getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Time endTime) {
-        this.endTime = endTime;
-    }
-
-    public InteractionType getType() {
-        return type;
-    }
-
-    public void setType(InteractionType type) {
-        this.type = type;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getObjectives() {
-        return objectives;
-    }
-
-    public void setObjectives(String objectives) {
-        this.objectives = objectives;
-    }
-
-    public String getPrivateNotes() {
-        return privateNotes;
-    }
-
-    public void setPrivateNotes(String privateNotes) {
-        this.privateNotes = privateNotes;
-    }
-
-    public InteractionConclusion getConclusion() {
-        return conclusion;
-    }
-
-    public void setConclusion(InteractionConclusion conclusion) {
-        this.conclusion = conclusion;
-    }
-
-    public Time getNextDate() {
-        return nextDate;
-    }
-
-    public void setNextDate(Time nextDate) {
-        this.nextDate = nextDate;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Interaction that = (Interaction) o;
-        return Objects.equals(contact, that.contact) && status == that.status && Objects.equals(startTime, that.startTime) && Objects.equals(endTime, that.endTime) && type == that.type && Objects.equals(subject, that.subject) && Objects.equals(objectives, that.objectives) && Objects.equals(privateNotes, that.privateNotes) && conclusion == that.conclusion && Objects.equals(nextDate, that.nextDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(contact, status, startTime, endTime, type, subject, objectives, privateNotes, conclusion, nextDate);
-    }
-
-    @Override
-    public String toString() {
-        return "Interaction{" +
-                "id=" + id +
-                ", contact=" + contact +
-                ", status=" + status +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", type=" + type +
-                ", subject='" + subject + '\'' +
-                ", objectives='" + objectives + '\'' +
-                ", privateNotes='" + privateNotes + '\'' +
-                ", conclusion=" + conclusion +
-                ", nextDate=" + nextDate +
-                '}';
     }
 }

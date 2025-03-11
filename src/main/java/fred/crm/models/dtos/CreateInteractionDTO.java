@@ -7,8 +7,7 @@ import fred.crm.models.values.InteractionType;
 
 import java.sql.Time;
 
-public record InteractionDTO(
-        Long id,
+public record CreateInteractionDTO(
         InteractionStatus status,
         Time startTime,
         Time endTime,
@@ -17,8 +16,8 @@ public record InteractionDTO(
         String objectives,
         String privateNotes,
         InteractionConclusion conclusion,
-        InteractionDTO nextInteraction,
-        InteractionDTO previousInteraction,
+        CreateInteractionDTO nextInteraction,
+        CreateInteractionDTO previousInteraction,
         ContactDTO contact
 ) {
 }
