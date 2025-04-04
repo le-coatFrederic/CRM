@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 
 @Entity
 @NoArgsConstructor
@@ -30,13 +31,11 @@ public class Interaction {
 
     @NonNull
     @Column(nullable = false)
-    @Convert(converter = CryptoConverter.class)
-    private Time startTime;
+    private Timestamp startTime;
 
     @NonNull
     @Column(nullable = false)
-    @Convert(converter = CryptoConverter.class)
-    private Time endTime;
+    private Timestamp endTime;
 
     @NonNull
     @Enumerated(EnumType.STRING)
@@ -76,7 +75,7 @@ public class Interaction {
     @JoinColumn(name = "contact_id")
     private Contact contact;
 
-    public Interaction(@NonNull InteractionStatus status, @NonNull Time startTime, @NonNull Time endTime, @NonNull InteractionType type, @NonNull String subject, @NonNull String objectives, @NonNull String privateNotes, @NonNull InteractionConclusion conclusion, Interaction nextInteraction, Interaction previousInteraction, Contact contact) {
+    public Interaction(@NonNull InteractionStatus status, @NonNull Timestamp startTime, @NonNull Timestamp endTime, @NonNull InteractionType type, @NonNull String subject, @NonNull String objectives, @NonNull String privateNotes, @NonNull InteractionConclusion conclusion, Interaction nextInteraction, Interaction previousInteraction, Contact contact) {
         this.status = status;
         this.startTime = startTime;
         this.endTime = endTime;

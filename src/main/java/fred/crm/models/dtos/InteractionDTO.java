@@ -6,19 +6,20 @@ import fred.crm.models.values.InteractionStatus;
 import fred.crm.models.values.InteractionType;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 
 public record InteractionDTO(
         Long id,
         InteractionStatus status,
-        Time startTime,
-        Time endTime,
+        Timestamp startTime,
+        Timestamp endTime,
         InteractionType type,
         String subject,
         String objectives,
         String privateNotes,
         InteractionConclusion conclusion,
-        InteractionDTO nextInteraction,
-        InteractionDTO previousInteraction,
+        Long nextInteraction,
+        Long previousInteraction,
         ContactDTO contact
 ) {
 }

@@ -1,44 +1,38 @@
 package fred.crm.models.mappers;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import fred.crm.models.Contact;
+import fred.crm.models.Interaction;
 import fred.crm.models.dtos.ContactDTO;
 import fred.crm.models.dtos.CreateContactDTO;
+import fred.crm.models.dtos.CreateInteractionDTO;
+import fred.crm.repositories.CompanyRepository;
+import fred.crm.repositories.InteractionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class CreateContactMapper {
     @Autowired
-    private CompanyMapper companyMapper;
-
-    public CreateContactDTO contactToContactDTO(Contact contact) {
-        if (contact == null) {
-            return null;
-        }
-
-        return new CreateContactDTO(
-                contact.getFirstname(),
-                contact.getLastname(),
-                contact.getJob(),
-                contact.getDepartment(),
-                contact.getDateJoinedCompany(),
-                contact.getEmail(),
-                contact.getPhone(),
-                contact.getLinkedinLink(),
-                contact.getYoutubeLink(),
-                contact.getMeetingCanal(),
-                contact.getRelationState(),
-                contact.getLanguage(),
-                contact.getCanalPreferred(),
-                contact.getContactHours(),
-                contact.getNotes(),
-                companyMapper.companyToCompanyDTO(contact.getCompany())
-        );
-    }
+    private CompanyRepository companyRepository;
+    @Autowired
+    private CreateInteractionMapper createInteractionMapper;
+    @Autowired
+    private InteractionRepository interactionRepository;
 
     public Contact contactDTOToContact(CreateContactDTO contactDTO) {
         if (contactDTO == null) {
             return null;
+        }
+
+        List<Interaction> interactions = new ArrayList<>();
+        for (CreateInteractionDTO createInteractionDTO: contactDTO.interactions()) {
+            Interaction interaction = createInteractionMapper.interactionDTOToInteraction(createInteractionDTO);
+            interactions.add(interactionRepository.save(interaction));
         }
 
         return new Contact(
@@ -57,8 +51,8 @@ public class CreateContactMapper {
                 contactDTO.canalPreferred(),
                 contactDTO.contactHours(),
                 contactDTO.notes(),
-                companyMapper.companyDTOToCompany(contactDTO.company()),
-                null
+                companyRepository.findById(contactDTO.company()).orElse(null),
+                interactions
         );
     }
 }

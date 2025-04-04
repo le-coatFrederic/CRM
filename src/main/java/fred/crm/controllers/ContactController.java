@@ -20,6 +20,12 @@ public class ContactController {
     private ContactMapper contactMapper;
     private CreateContactMapper createContactMapper;
 
+    public ContactController(ContactCRUDService contactCRUDService, ContactMapper contactMapper, CreateContactMapper createContactMapper) {
+        this.contactCRUDService = contactCRUDService;
+        this.contactMapper = contactMapper;
+        this.createContactMapper = createContactMapper;
+    }
+
     @GetMapping
     public ResponseEntity<List<ContactDTO>> getAllContacts() {
         List<Contact> contacts = contactCRUDService.findAll();
@@ -40,6 +46,7 @@ public class ContactController {
 
     @PostMapping
     public ResponseEntity<ContactDTO> createContact(@RequestBody CreateContactDTO contactDTO) {
+        System.out.println(contactDTO);
         Contact contact = contactCRUDService.save(createContactMapper.contactDTOToContact(contactDTO));
         return ResponseEntity.ok(contactMapper.contactToContactDTO(contact));
     }

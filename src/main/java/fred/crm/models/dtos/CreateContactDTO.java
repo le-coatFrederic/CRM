@@ -4,6 +4,7 @@ import fred.crm.models.values.RelationState;
 import fred.crm.models.values.SocialMedia;
 
 import java.sql.Date;
+import java.util.List;
 
 public record CreateContactDTO(
         String firstname,
@@ -21,6 +22,7 @@ public record CreateContactDTO(
         SocialMedia canalPreferred,
         String contactHours,
         String notes,
-        CompanyDTO company
+        Long company,
+        List<CreateInteractionDTO> interactions
 ) {
 }

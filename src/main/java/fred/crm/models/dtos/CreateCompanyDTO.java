@@ -5,6 +5,7 @@ import fred.crm.models.values.Maturity;
 import fred.crm.models.values.Region;
 
 import java.sql.Date;
+import java.util.List;
 
 public record CreateCompanyDTO(
         String name,
@@ -29,6 +30,8 @@ public record CreateCompanyDTO(
         String facebook,
         String comments,
         String mainColor,
-        String secondaryColor
+        String secondaryColor,
+        List<Long> contacts,
+        List<Long> locations
 ) {
 }

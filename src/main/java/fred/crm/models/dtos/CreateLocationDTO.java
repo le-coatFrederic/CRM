@@ -7,6 +7,6 @@ public record CreateLocationDTO(
         String zipcode,
         String state,
         String country,
-        CompanyDTO company
+        Long company
 ) {
 }

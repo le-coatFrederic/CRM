@@ -1,6 +1,7 @@
 package fred.crm.controllers;
 
 import fred.crm.models.Interaction;
+import fred.crm.models.dtos.CreateInteractionDTO;
 import fred.crm.models.dtos.InteractionDTO;
 import fred.crm.models.mappers.CreateInteractionMapper;
 import fred.crm.models.mappers.InteractionMapper;
@@ -44,8 +45,8 @@ public class InteractionController {
     }
 
     @PostMapping
-    public ResponseEntity<InteractionDTO> createInteraction(@RequestBody InteractionDTO interactionDTO) {
-        Interaction interaction = interactionCRUDService.save(interactionMapper.interactionDTOToInteraction(interactionDTO));
+    public ResponseEntity<InteractionDTO> createInteraction(@RequestBody CreateInteractionDTO interactionDTO) {
+        Interaction interaction = interactionCRUDService.save(createInteractionMapper.interactionDTOToInteraction(interactionDTO));
         return new ResponseEntity(interactionMapper.interactionToInteractionDTO(interaction), HttpStatus.CREATED);
     }
 

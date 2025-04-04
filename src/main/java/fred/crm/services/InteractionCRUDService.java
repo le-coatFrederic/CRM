@@ -16,7 +16,10 @@ public class InteractionCRUDService {
 
     public List<Interaction> findAll() { return interactionRepository.findAll(); }
     public Interaction save(Interaction interaction) { return interactionRepository.save(interaction); }
-    public Interaction findById(Long id) { return interactionRepository.findById(id).get(); }
+
+    public Interaction findById(Long id) {
+        return id != null ? interactionRepository.findById(id).get() : null;
+    }
     public void delete(Interaction interaction) { interactionRepository.delete(interaction); }
     public void deleteById(Long id) { interactionRepository.deleteById(id); }
 }

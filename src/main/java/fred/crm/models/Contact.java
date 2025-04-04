@@ -43,7 +43,6 @@ public class Contact {
     private String department;
 
     @Column(nullable = true)
-    @Convert(converter = CryptoConverter.class)
     private Date dateJoinedCompany;
 
     @Column(nullable = true)
